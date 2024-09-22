@@ -2,7 +2,7 @@
 
 void swap(int *a, int *b);
 void heapify(int *arr, int max, int i);
-void heapSort(int *arr, int N);
+void heapSort(int *arr, int max);
 void printArray(int arr[], int N);
 
 int main()
@@ -25,7 +25,7 @@ void heapify(int *arr, int max, int i){
         high = leftChild;
     }
 
-    if(rightChild < max && arr[leftChild] > arr[high]){
+    if(rightChild < max && arr[rightChild] > arr[high]){
         high = rightChild;
     }
 
@@ -36,8 +36,30 @@ void heapify(int *arr, int max, int i){
 
 }
 
+void heapSort(int *arr, int max){
+
+    int i, j;
+    for(i = max/2 - 1; i >= 0; i--){
+        heapify(arr, max, i);
+    }
+
+    for(i = max - 1; i >= 0; i--){
+        swap(&arr[i], &arr[0]);
+        heapify(arr, i, 0);
+    }
+
+}
+
 void swap(int *a, int *b){
     int temp = *a;
     *a = *b;
     *b = temp;
+}
+
+void printArray(int arr[], int N)
+{
+    for (int i = 0; i < N; i++){
+        printf("%d ", arr[i]);
+    }
+
 }
