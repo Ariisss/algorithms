@@ -20,15 +20,15 @@ int main(){
 void bubbleSort(int *arr, int size){
 
     int i, j;
-    int swapped;
+    // loop till the end
     for(i = 0; i < size - 1 ; i++){
-        swapped = 0;
+
+        // for each element, loop to put larger elements at the end. For each iteration, the largest element will be correctly placed
         for(j = 0; j < size - i - 1; j++){
             if(arr[j] > arr[j+1]){
                 int temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
-                swapped = 1;
             }
         }
     }
