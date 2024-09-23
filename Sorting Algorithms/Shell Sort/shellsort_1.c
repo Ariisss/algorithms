@@ -18,15 +18,24 @@ void shellSort(int *arr, int size){
 
     int gap, i, j;
 
+    // loop until gap becomes 0
     for(gap = size/2; gap > 0; gap /= 2){
+
+        // loop starting the gap-th index and apply insertion sort logic to the gap-th elements before it.
         for(i = gap; i < size; i++){
 
+            // hold the value of the index to sort
             int key = arr[i];
+
+            // loop j for each gap-th element for each element greater than the key value
             for(j = i; j >= gap && key < arr[j-gap]; j -= gap){
                 arr[j] = arr[j - gap];
             }
+
+            // since j is now in the proper place in gap-th elements, place the held value in it.
             arr[j] = key;
         }
+
     }
 
 }
