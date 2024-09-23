@@ -19,16 +19,21 @@ int main(){
 
 void bubbleSort(int *arr, int size){
 
-    int i, j;
-    // loop till the end
-    for(i = 0; i < size - 1 ; i++){
+    int i, j, swapped = 1;
+    // loop till the end or as long as there are swaps happening, if none, that means the array is sorted already.
+    for(i = 0; i < size - 1 && swapped == 1; i++){
 
+        // set the flag to 0
+        swapped = 0;
         // for each element, loop to put larger elements at the end. For each iteration, the largest element will be correctly placed
         for(j = 0; j < size - i - 1; j++){
+
+            // if a swap happens, trigger the flag to indicate that another loop should be done.
             if(arr[j] > arr[j+1]){
                 int temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
+                swapped = 1;
             }
         }
     }
