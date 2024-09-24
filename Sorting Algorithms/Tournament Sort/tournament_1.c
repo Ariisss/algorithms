@@ -28,11 +28,12 @@ void tournaSort(int *arr, int size){
         x--;
     }
 
-    for(j = 0; j < size; j++){
-        for(i = (heapSize/2) - 1; i >= 0; i--){
+    for(i = 0; i < size; i++){
+
+        for(j = (heapSize/2) - 1; j >= 0; j--){
             
-            int LC = (i*2) + 1;
-            int RC = (i*2) + 2;
+            int LC = (j*2) + 1;
+            int RC = (j*2) + 2;
             
             int left = LC < heapSize - size ? heap[LC] : LC;
             int right = RC < heapSize - size ? heap[RC] : RC;
@@ -41,6 +42,8 @@ void tournaSort(int *arr, int size){
 
             j = (i > 0 && j != 0) ? (j-1)/2 : j-1;
         }
+
+        
 
     }
 
