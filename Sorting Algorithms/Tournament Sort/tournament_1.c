@@ -11,7 +11,13 @@ int main(){
     int arr[] = { 12, 11, 13, 5, 6, 7, 2, 5, 15 , 1, 0 };
     int N = sizeof(arr) / sizeof(arr[0]);
 
-    // tournaSort(arr, N);
+    printf("Initial Array: \n");
+    printArray(arr, N);
+
+    tournaSort(arr, N);
+
+    printf("\n\nSorted Array: \n");
+    printArray(arr, N);
 
     return 0;
 }
@@ -43,12 +49,9 @@ void tournaSort(int *arr, int size){
 
             j = (i > 0 && j != 0) ? (j-1)/2 : j-1;
         }
-
         startNdx = heap[0];
         arr[i] = heap[startNdx];
         heap[startNdx] = INF;
-
-
     }
 
 
