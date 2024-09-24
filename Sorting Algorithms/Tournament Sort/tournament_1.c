@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define INF 9999999
 
 void printArray(int arr[], int N);
 void swap(int *a, int *b);
@@ -21,7 +22,7 @@ void tournaSort(int *arr, int size){
     int* heap = (int*)malloc(heapSize * sizeof(int));
 
     int i, j, x = heapSize;
-    int winFlag = 0;
+    int startNdx = heapSize - 1;
 
     for(i = size - 1; i >= 0; i--){
         heap[x - 1] = arr[i];
@@ -30,7 +31,7 @@ void tournaSort(int *arr, int size){
 
     for(i = 0; i < size; i++){
 
-        for(j = (heapSize/2) - 1; j >= 0; j--){
+        for(j = (startNdx-1)/2; j >= 0;){
             
             int LC = (j*2) + 1;
             int RC = (j*2) + 2;
@@ -43,7 +44,10 @@ void tournaSort(int *arr, int size){
             j = (i > 0 && j != 0) ? (j-1)/2 : j-1;
         }
 
-        
+        startNdx = heap[0];
+        arr[i] = heap[startNdx];
+        heap[startNdx] = INF;
+
 
     }
 
