@@ -1,4 +1,4 @@
-// This version implements recursive version of heapify with the 0th index as the last index counter.
+// This version implements recursive version of min heapify with the 0th index as the last index counter.
 
 #include <stdio.h>
 #include <stdlib.h>
