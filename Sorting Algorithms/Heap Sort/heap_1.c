@@ -1,3 +1,5 @@
+// This version implements recursive version of heapify and implements heapsort by building a heap first
+
 #include <stdio.h>
 
 void swap(int *a, int *b);
