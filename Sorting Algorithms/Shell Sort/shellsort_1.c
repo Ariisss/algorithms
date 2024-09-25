@@ -28,6 +28,7 @@ void shellSort(int *arr, int size){
             int key = arr[i];
 
             // loop j for each gap-th element for each element greater than the key value
+            // and while j is greater than gap (j lesser than gap will make j out of array bounds in the next iteration)
             for(j = i; j >= gap && key < arr[j-gap]; j -= gap){
                 arr[j] = arr[j - gap];
             }
