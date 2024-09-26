@@ -8,7 +8,7 @@ typedef struct
     int count;
 } ARRAY;
 
-int* countSort(ARRAY *arr);
+int *countSort(ARRAY *arr);
 void printArray(int arr[], int N);
 
 int main()
@@ -27,16 +27,15 @@ int main()
         arr.count++;
     }
 
-    int* output = countSort(&arr);
+    int *output = countSort(&arr);
     printArray(output, MAX);
 }
 
-int* countSort(ARRAY *arr)
+int *countSort(ARRAY *arr)
 {
 
-    int i, j;
-
-    int* output = (int*)calloc(MAX, sizeof(int));
+    int i;
+    int *output = (int *)calloc(MAX, sizeof(int));
 
     // 1) find max element
     int max = -1;
@@ -64,7 +63,8 @@ int* countSort(ARRAY *arr)
     }
 
     // 5) fill the output array
-    for (i = arr->count - 1; i >= 0; i--){
+    for (i = arr->count - 1; i >= 0; i--)
+    {
         output[--countArray[arr->elems[i]]] = arr->elems[i];
     }
 
