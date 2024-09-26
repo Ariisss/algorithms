@@ -52,9 +52,10 @@ int *countSort(ARRAY *arr)
     
     printf("\nmin: %d\n", min);
 
+    int range = max - min + 1;
 
     // 2) create count array with max - min size
-    int *countArray = (int *)calloc(max - min + 1, sizeof(int));
+    int *countArray = (int *)calloc(range, sizeof(int));
 
     // 3) add element count/frequency
     for (i = 0; i < MAX; i++)
@@ -63,7 +64,7 @@ int *countSort(ARRAY *arr)
     }
 
     // 4) turn countArray to prefix sum
-    for (i = 0; i < (max - min); i++)
+    for (i = 0; i < range-1; i++)
     {
         countArray[i + 1] += countArray[i];
     }
