@@ -30,27 +30,45 @@ int main()
 
     int arr[] = {27, 14, 89, 3, 56, 42, 18, 75, 9, 33};
 
-    // selectionSort(arr);
+    selectionSort(arr);
     // bubbleSort(arr);
+    // insertionSort(arr);
 
-    printArray(arr, MAX); 
-
+    printArray(arr, MAX);
 }
 
-void bubbleSort(int *arr){
+void insertionSort(int *arr)
+{
+    int i, j, key;
+
+    for(i = 0; i < MAX; i++){
+        key = arr[i];
+        for(j = i - 1; j >= 0 && arr[j] > key; j--){
+            arr[j+1] = arr[j];
+            ITERATIONS++;
+        }
+        ITERATIONS++;
+        arr[j + 1] = key;
+    }
+}
+
+void bubbleSort(int *arr)
+{
 
     int i, j;
-    for(i = 0; i < MAX; i++){
+    for (i = 0; i < MAX; i++)
+    {
         ITERATIONS++;
-        for(j = 0; j < MAX - i - 1; j++){
+        for (j = 0; j < MAX - i - 1; j++)
+        {
             ITERATIONS++;
-            if(arr[j] > arr[j+1]){
-                swap(&arr[j], &arr[j+1]);
+            if (arr[j] > arr[j + 1])
+            {
+                swap(&arr[j], &arr[j + 1]);
                 SWAPS++;
             }
         }
     }
-
 }
 
 void selectionSort(int *arr)
@@ -62,13 +80,15 @@ void selectionSort(int *arr)
         min = i;
         for (j = i + 1; j < MAX; j++)
         {
-            if (arr[j] < arr[min]){
+            if (arr[j] < arr[min])
+            {
                 min = j;
             }
             ITERATIONS++;
         }
 
-        if(min != i){
+        if (min != i)
+        {
             swap(&arr[min], &arr[i]);
             SWAPS++;
         }
