@@ -3,6 +3,9 @@
 #include <string.h>
 #define MAX 10
 
+int SWAPS = 0;
+int ITERATIONS = 0;
+
 // 1) Selection Sort
 void selectionSort(int *arr);
 // 2) Bubble Sort
@@ -27,9 +30,26 @@ int main()
 
     int arr[] = {27, 14, 89, 3, 56, 42, 18, 75, 9, 33};
 
-    selectionSort(arr);
+    // selectionSort(arr);
+    // bubbleSort(arr);
 
     printArray(arr, MAX); 
+
+}
+
+void bubbleSort(int *arr){
+
+    int i, j;
+    for(i = 0; i < MAX; i++){
+        ITERATIONS++;
+        for(j = 0; j < MAX - i - 1; j++){
+            ITERATIONS++;
+            if(arr[j] > arr[j+1]){
+                swap(&arr[j], &arr[j+1]);
+                SWAPS++;
+            }
+        }
+    }
 
 }
 
@@ -45,13 +65,23 @@ void selectionSort(int *arr)
             if (arr[j] < arr[min]){
                 min = j;
             }
+            ITERATIONS++;
         }
-        swap(&arr[min], &arr[i]);
+
+        if(min != i){
+            swap(&arr[min], &arr[i]);
+            SWAPS++;
+        }
+        ITERATIONS++;
     }
 }
 
 void printArray(int arr[], int N)
 {
+
+    printf("# of Iterations: %d\n", ITERATIONS);
+    printf("# of Swaps: %d\n", SWAPS);
+
     for (int i = 0; i < N; i++)
     {
         printf("%d ", arr[i]);
