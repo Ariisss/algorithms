@@ -22,16 +22,32 @@ void tournamentSort(int *arr);
 void printArray(int arr[], int size);
 void swap(int *a, int *b);
 
-int main(){
+int main()
+{
 
     int arr[] = {27, 14, 89, 3, 56, 42, 18, 75, 9, 33};
 
-    
+    selectionSort(arr);
+
+    printArray(arr, MAX); 
 
 }
 
-void selectionSort(int *arr){
+void selectionSort(int *arr)
+{
 
+    int min, i, j;
+    for (i = 0; i < MAX; i++)
+    {
+        min = i;
+        for (j = i + 1; j < MAX; j++)
+        {
+            if (arr[j] < arr[min]){
+                min = j;
+            }
+        }
+        swap(&arr[min], &arr[i]);
+    }
 }
 
 void printArray(int arr[], int N)
@@ -42,7 +58,8 @@ void printArray(int arr[], int N)
     }
 }
 
-void swap(int *a, int *b){
+void swap(int *a, int *b)
+{
     int temp = *a;
     *a = *b;
     *b = temp;
