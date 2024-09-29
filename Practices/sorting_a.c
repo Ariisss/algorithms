@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX 10
+#define INF 9999
 
 int SWAPS = 0;
 int ITERATIONS = 0;
@@ -34,77 +35,127 @@ int main()
 
     // selectionSort(arr);
     // bubbleSort(arr);
-    // insertionSort(arr);
+    // insertionSort(arr); 
     // heapSort(arr);
     // shellSort(arr);
-    combSort(arr);
+    // combSort(arr);
+    tournamentSort(arr);
 
     printArray(arr, MAX);
 }
 
-void combSort(int *arr){
+void tournamentSort(int *arr)
+{
+
+    int heapSize = MAX * 2 - 1;
+    int heap[MAX * 2 - 1];
+    // printf("%d", heapSize);
+
+    int i, j = MAX - 1;
+    for (i = heapSize - 1; i >= 0; i--, j--)
+    {
+        heap[i] = j >= 0 ? arr[j] : INF;
+    }
+    // printArray(arr, MAX);
+    // printArray(heap, heapSize);
+    int startNdx = heapSize - 1;
+
+    for (i = 0; i < MAX; i++)
+    {
+
+        for (j = (startNdx - 1) / 2; j >= 0;)
+        {
+
+            int LC = j * 2 + 1;
+            int RC = LC + 1;
+
+            int left = LC < heapSize / 2 ? heap[LC] : LC;
+            int right = RC < heapSize / 2 ? heap[RC] : RC;
+
+            heap[j] = heap[left] < heap[right] ? left : right;
+            
+            ITERATIONS++;
+
+            j = (i > 0 && j != 0) ? (j - 1) / 2 : j - 1;
+        }
+
+        startNdx = heap[0];
+        arr[i] = heap[startNdx];
+        heap[startNdx] = INF;
+        SWAPS++;
+    }
+}
+
+void combSort(int *arr)
+{
 
     int i, j, gap;
     int swapped = 1;
 
-    while(gap != 1 || swapped == 1){
+    while (gap != 1 || swapped == 1)
+    {
 
         gap /= 1.3;
 
-        if(gap < 1){
+        if (gap < 1)
+        {
             gap = 1;
         }
 
         swapped = 0;
 
-        for(i = 0; i+gap < MAX; i++){
-            if(arr[i] > arr[i+gap]){
+        for (i = 0; i + gap < MAX; i++)
+        {
+            if (arr[i] > arr[i + gap])
+            {
                 swap(&arr[i], &arr[i + gap]);
                 swapped = 1;
                 SWAPS++;
             }
             ITERATIONS++;
         }
-
     }
-
 }
 
-void shellSort(int *arr){
+void shellSort(int *arr)
+{
 
     int i, j, gap;
 
-    for(gap = MAX/2; gap > 0; gap /= 2){
+    for (gap = MAX / 2; gap > 0; gap /= 2)
+    {
 
-        for(i = gap; i < MAX; i++){
+        for (i = gap; i < MAX; i++)
+        {
 
             int key = arr[i];
-            for(j = i; j >= gap && key < arr[j-gap]; j -= gap){
-                arr[j] = arr[j-gap];
+            for (j = i; j >= gap && key < arr[j - gap]; j -= gap)
+            {
+                arr[j] = arr[j - gap];
                 ITERATIONS++;
                 SHIFTS++;
             }
 
             ITERATIONS++;
             arr[j] = key;
-        }   
-
+        }
     }
-
 }
 
-void heapSort(int *arr){
+void heapSort(int *arr)
+{
 
     int i;
-    for(i = (MAX-1)/2; i >= 0; i--){
+    for (i = (MAX - 1) / 2; i >= 0; i--)
+    {
         maxHeapify(arr, MAX, i);
     }
 
-    for(i = MAX-1; i >= 0; i--){
+    for (i = MAX - 1; i >= 0; i--)
+    {
         swap(&arr[0], &arr[i]);
         maxHeapify(arr, i, 0);
     }
-
 }
 
 void maxHeapify(int *arr, int max, int ndx)
@@ -204,6 +255,8 @@ void printArray(int arr[], int N)
     {
         printf("%d ", arr[i]);
     }
+
+    printf("\n");
 }
 
 void swap(int *a, int *b)
