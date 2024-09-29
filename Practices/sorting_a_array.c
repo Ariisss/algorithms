@@ -39,7 +39,7 @@ int main()
     // heapSort(arr);
     // shellSort(arr);
     // combSort(arr);
-    tournamentSort(arr);
+    // tournamentSort(arr);
 
     printArray(arr, MAX);
 }
