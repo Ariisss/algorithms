@@ -37,15 +37,34 @@ int main()
     // bubbleSort(arr);
     // insertionSort(arr);
     // heapSort(arr);
-    // shellSort(arr);
+    shellSort(arr);
     // combSort(arr);
     // tournamentSort(arr);
 
     printArray(arr, MAX);
 }
 
-void shellSort( int *arr){
-    
+void shellSort(int *arr)
+{
+
+    int gap, i, j, key;
+
+    for (gap = MAX / 2; gap > 0; gap /= 2)
+    {
+
+        for (i = gap; i < MAX; i++)
+        {
+            key = arr[i];
+
+            for (j = i; j >= gap && arr[j - gap] > key; j -= gap)
+            {
+                arr[j] = arr[j - gap];
+                SHIFTS++;
+            }
+            ITERATIONS++;
+            arr[j] = key;
+        }
+    }
 }
 
 void insertionSort(int *arr)
@@ -55,16 +74,14 @@ void insertionSort(int *arr)
     for (i = 1; i < MAX; i++)
     {
         value = arr[i];
-        for (j = i; j > 0 && arr[j-1] > value; j--)
+        for (j = i; j > 0 && arr[j - 1] > value; j--)
         {
             arr[j] = arr[j - 1];
             SHIFTS++;
-            ITERATIONS++;
         }
         ITERATIONS++;
         arr[j] = value;
     }
-    
 }
 
 void bubbleSort(int *arr)
