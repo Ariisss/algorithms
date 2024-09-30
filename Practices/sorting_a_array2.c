@@ -15,8 +15,9 @@ void bubbleSort(int *arr);
 // 3) Insertion Sort
 void insertionSort(int *arr);
 // 4) Heapsort Sort (Descending with heap[0] as last index)
-void heapSort(int *arr);
-void minHeapify(int *arr, int max, int ndx);
+void heapSort(int *heap);
+int* heapifyArray(int *arr);
+void minHeapify(int *arr, int root);
 // 5) Shell Sort
 void shellSort(int *arr);
 // 6) Comb Sort
@@ -36,12 +37,97 @@ int main()
     // selectionSort(arr);
     // bubbleSort(arr);
     // insertionSort(arr);
-    // heapSort(arr);
-    shellSort(arr);
+    // shellSort(arr);
     // combSort(arr);
     // tournamentSort(arr);
 
-    printArray(arr, MAX);
+    // int *heap = heapifyArray(arr);
+    // heapSort(heap);
+
+    // printArray(heap, MAX+1);
+    // printArray(arr, MAX);
+}
+
+void heapSort(int *heap){
+
+    int i, lastNdx = heap[0];
+
+    for(i = heap[0]; i > 0; i--){
+        swap(&heap[1], &heap[i]);
+        heap[0]--;
+        minHeapify(heap, 1);
+    }
+
+    heap[0] = lastNdx;
+
+}
+
+int* heapifyArray(int *arr){
+
+    int *heap = malloc(sizeof(int) * (MAX+1));
+    heap[0] = 0;
+    int i;
+    
+    for(i = 0; i < MAX; i++){
+        heap[i+1] = arr[i];
+        heap[0]++;
+    }
+
+    for(i = heap[0]/2; i > 0; i--){
+        minHeapify(heap, i);
+    }
+
+    return heap;
+}
+
+void minHeapify(int *arr, int root){
+
+    int low = root;
+    int LC = low * 2;
+    int RC = low * 2 + 1;
+
+    if(LC <= arr[0] && arr[LC] < arr[low]){
+        low = LC;
+    }
+
+    if(RC <= arr[0] && arr[RC] < arr[low]){
+        low = RC;
+    }
+
+    if(low != root){
+        swap(&arr[low], &arr[root]);
+        minHeapify(arr, low);
+    }
+
+}
+
+void combSort(int *arr){
+
+    int gap = MAX/1.3, i, swapped = 1;
+
+    while(gap >= 1 || swapped){
+
+        int pairs = MAX - gap;
+        swapped = 0;
+
+        if(gap < 1){
+            gap = 1;
+        }
+
+        for(i = 0; i + gap < MAX; i++){
+            if(arr[i] > arr[i+gap]){
+                swap(&arr[i], &arr[i+gap]);
+                swapped = 1;
+                SWAPS++;
+            }
+        }
+
+        ITERATIONS++;
+        gap /= 1.3;
+
+    }  
+    
+
 }
 
 void shellSort(int *arr)
