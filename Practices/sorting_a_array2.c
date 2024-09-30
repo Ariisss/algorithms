@@ -24,6 +24,7 @@ void shellSort(int *arr);
 void combSort(int *arr);
 // 7) Tournament Sort
 void tournamentSort(int *arr);
+void tournamentSort2(int *arr);
 
 // Util Functions
 void printArray(int arr[], int size);
@@ -39,13 +40,52 @@ int main()
     // insertionSort(arr);
     // shellSort(arr);
     // combSort(arr);
-    tournamentSort(arr);
+    // tournamentSort(arr);
+    tournamentSort2(arr);
 
     // int *heap = heapifyArray(arr);
     // heapSort(heap);
 
     // printArray(heap, MAX+1);
     printArray(arr, MAX);
+}
+
+void tournamentSort2(int *arr){;
+
+    int heapSize = MAX*2;
+    int *heap = malloc(sizeof(int) * heapSize);
+    heap[0] = heapSize-1;
+
+    int i, j = MAX-1;
+    for(i = heap[0]; i >= 1; i--){
+        heap[i] = j >= 0 ? arr[j--] : INF;
+    }
+
+    printArray(heap, heapSize);
+    int startNdx = (heapSize-1);
+
+    for(i = 0; i < MAX; i++){
+
+        for(j = startNdx/2; j >= 1; ){
+
+            int LC = j * 2;
+            int RC = LC + 1;
+
+            int left = LC < heapSize/2 ? heap[LC] : LC;
+            int right = RC < heapSize/2 ? heap[RC] : RC;
+
+            heap[j] = heap[left] < heap[right] ? left : right;
+
+            j = (i > 1 && j != 1) ? j/2 : j - 1;
+
+        }
+
+        startNdx = heap[1];
+        arr[i] = heap[startNdx];
+        heap[startNdx] = INF;
+
+    }
+
 }
 
 void tournamentSort(int *arr)
@@ -59,8 +99,6 @@ void tournamentSort(int *arr)
     {
         heap[i] = j >= 0 ? arr[j--] : INF;
     }
-
-    // printArray(heap, heapSize);
 
     int startNdx = heapSize - 1;
 
