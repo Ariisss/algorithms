@@ -16,7 +16,7 @@ void bubbleSort(int *arr);
 void insertionSort(int *arr);
 // 4) Heapsort Sort (Descending with heap[0] as last index)
 void heapSort(int *heap);
-int* heapifyArray(int *arr);
+int *heapifyArray(int *arr);
 void minHeapify(int *arr, int root);
 // 5) Shell Sort
 void shellSort(int *arr);
@@ -48,13 +48,15 @@ int main()
     printArray(arr, MAX);
 }
 
-void tournamentSort(int *arr){
+void tournamentSort(int *arr)
+{
 
     int heapSize = MAX * 2 - 1;
     int *heap = malloc(sizeof(int) * heapSize);
 
-    int i, j = MAX-1;
-    for(i = heapSize - 1; i >= 0; i--){
+    int i, j = MAX - 1;
+    for (i = heapSize - 1; i >= 0; i--)
+    {
         heap[i] = j >= 0 ? arr[j--] : INF;
     }
 
@@ -62,9 +64,11 @@ void tournamentSort(int *arr){
 
     int startNdx = heapSize - 1;
 
-    for(i = 0; i < MAX; i++){
+    for (i = 0; i < MAX; i++)
+    {
 
-        for(j = (startNdx - 1) / 2; j >= 0 ; ){
+        for (j = (startNdx - 1) / 2; j >= 0;)
+        {
 
             int LC = j * 2 + 1;
             int RC = j * 2 + 2;
@@ -74,7 +78,7 @@ void tournamentSort(int *arr){
 
             heap[j] = heap[left] < heap[right] ? left : right;
 
-            j = (i > 0 && j != 0) ? (j-1)/2 : j - 1;
+            j = (i > 0 && j != 0) ? (j - 1) / 2 : j - 1;
             ITERATIONS++;
         }
         startNdx = heap[0];
@@ -82,78 +86,88 @@ void tournamentSort(int *arr){
         heap[startNdx] = INF;
         SWAPS++;
     }
-
 }
 
-void heapSort(int *heap){
+void heapSort(int *heap)
+{
 
     int i, lastNdx = heap[0];
 
-    for(i = heap[0]; i > 0; i--){
+    for (i = heap[0]; i > 0; i--)
+    {
         swap(&heap[1], &heap[i]);
         heap[0]--;
         minHeapify(heap, 1);
     }
 
     heap[0] = lastNdx;
-
 }
 
-int* heapifyArray(int *arr){
+int *heapifyArray(int *arr)
+{
 
-    int *heap = malloc(sizeof(int) * (MAX+1));
+    int *heap = malloc(sizeof(int) * (MAX + 1));
     heap[0] = 0;
     int i;
-    
-    for(i = 0; i < MAX; i++){
-        heap[i+1] = arr[i];
+
+    for (i = 0; i < MAX; i++)
+    {
+        heap[i + 1] = arr[i];
         heap[0]++;
     }
 
-    for(i = heap[0]/2; i > 0; i--){
+    for (i = heap[0] / 2; i > 0; i--)
+    {
         minHeapify(heap, i);
     }
 
     return heap;
 }
 
-void minHeapify(int *arr, int root){
+void minHeapify(int *arr, int root)
+{
 
     int low = root;
     int LC = low * 2;
     int RC = low * 2 + 1;
 
-    if(LC <= arr[0] && arr[LC] < arr[low]){
+    if (LC <= arr[0] && arr[LC] < arr[low])
+    {
         low = LC;
     }
 
-    if(RC <= arr[0] && arr[RC] < arr[low]){
+    if (RC <= arr[0] && arr[RC] < arr[low])
+    {
         low = RC;
     }
 
-    if(low != root){
+    if (low != root)
+    {
         swap(&arr[low], &arr[root]);
         minHeapify(arr, low);
     }
-
 }
 
-void combSort(int *arr){
+void combSort(int *arr)
+{
 
-    int gap = MAX/1.3, i, swapped = 1;
+    int gap = MAX / 1.3, i, swapped = 1;
 
-    while(gap >= 1 || swapped){
+    while (gap >= 1 || swapped)
+    {
 
-        int pairs = MAX - gap;
         swapped = 0;
 
-        if(gap < 1){
+        if (gap < 1)
+        {
             gap = 1;
         }
 
-        for(i = 0; i + gap < MAX; i++){
-            if(arr[i] > arr[i+gap]){
-                swap(&arr[i], &arr[i+gap]);
+        for (i = 0; i + gap < MAX; i++)
+        {
+            if (arr[i] > arr[i + gap])
+            {
+                swap(&arr[i], &arr[i + gap]);
                 swapped = 1;
                 SWAPS++;
             }
@@ -161,10 +175,7 @@ void combSort(int *arr){
 
         ITERATIONS++;
         gap /= 1.3;
-
-    }  
-    
-
+    }
 }
 
 void shellSort(int *arr)
