@@ -35,7 +35,7 @@ int main()
 
     // selectionSort(arr);
     // bubbleSort(arr);
-    // insertionSort(arr); 
+    // insertionSort(arr);
     // heapSort(arr);
     // shellSort(arr);
     // combSort(arr);
@@ -73,7 +73,7 @@ void tournamentSort(int *arr)
             int right = RC < heapSize / 2 ? heap[RC] : RC;
 
             heap[j] = heap[left] < heap[right] ? left : right;
-            
+
             ITERATIONS++;
 
             j = (i > 0 && j != 0) ? (j - 1) / 2 : j - 1;
