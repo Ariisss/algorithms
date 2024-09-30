@@ -39,13 +39,50 @@ int main()
     // insertionSort(arr);
     // shellSort(arr);
     // combSort(arr);
-    // tournamentSort(arr);
+    tournamentSort(arr);
 
     // int *heap = heapifyArray(arr);
     // heapSort(heap);
 
     // printArray(heap, MAX+1);
-    // printArray(arr, MAX);
+    printArray(arr, MAX);
+}
+
+void tournamentSort(int *arr){
+
+    int heapSize = MAX * 2 - 1;
+    int *heap = malloc(sizeof(int) * heapSize);
+
+    int i, j = MAX-1;
+    for(i = heapSize - 1; i >= 0; i--){
+        heap[i] = j >= 0 ? arr[j--] : INF;
+    }
+
+    // printArray(heap, heapSize);
+
+    int startNdx = heapSize - 1;
+
+    for(i = 0; i < MAX; i++){
+
+        for(j = (startNdx - 1) / 2; j >= 0 ; ){
+
+            int LC = j * 2 + 1;
+            int RC = j * 2 + 2;
+
+            int left = LC < heapSize - MAX ? heap[LC] : LC;
+            int right = RC < heapSize - MAX ? heap[RC] : RC;
+
+            heap[j] = heap[left] < heap[right] ? left : right;
+
+            j = (i > 0 && j != 0) ? (j-1)/2 : j - 1;
+            ITERATIONS++;
+        }
+        startNdx = heap[0];
+        arr[i] = heap[startNdx];
+        heap[startNdx] = INF;
+        SWAPS++;
+    }
+
 }
 
 void heapSort(int *heap){
