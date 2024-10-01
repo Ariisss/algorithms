@@ -7,6 +7,13 @@ typedef struct
     int count;
 } ARRAY;
 
+// 1) initialize leftNdx (leftmost index) and rightNdx (MAX-1)
+// 2) if leftNdx < rightNdx, we get the middle index with formula [leftNdx + (rightNdx - 1) / 2]
+// 3) divide/make 2 sub arrays, left size is leftNdx to middle, right size is middle + 1 to rightNdx
+// 4) repeat 1 until each sub array only has 1 element
+// 5) 
+
+
 void swap(int *x, int *y);
 void printArray(int arr[], int N);
 
