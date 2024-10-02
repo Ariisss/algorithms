@@ -15,7 +15,7 @@ void insertionSort(int *arr);
 // 4) Heapsort Sort (Ascending)
 void heapSort(int *heap);
 int *heapifyArray(int *arr);
-void maxHeapify(int *arr, int root);
+void maxHeapify(int *heap, int root);
 // 5) Shell Sort
 void shellSort(int *arr);
 // 6) Comb Sort
@@ -37,13 +37,67 @@ int main()
     // insertionSort(arr);
     // shellSort(arr);
     // combSort(arr);
-    tournamentSort(arr);
+    // tournamentSort(arr);
 
-    // int *heap = heapifyArray(arr);
-    // heapSort(heap);
+    int *heap = heapifyArray(arr);
+    heapSort(heap);
 
-    // printArray(heap, MAX+1);
-    printArray(arr, MAX);
+    printArray(heap, heap[0] + 1);
+    // printArray(arr, MAX);
+}
+
+void heapSort(int *heap){
+
+    int origSize = heap[0];
+    for(int i = heap[0]; heap[0] > 0; i--, heap[0]--){
+        swap(&heap[1], &heap[i]);
+        maxHeapify(heap, 1);
+    }
+    heap[0] = origSize;
+
+
+}
+
+void maxHeapify(int *heap, int root){
+    
+    int high = root;
+    int LC = root * 2;
+    int RC = root * 2 + 1;
+
+    if(LC < heap[0] && heap[LC] > heap[high]){
+        high = LC;
+    }
+
+    if(RC < heap[0] && heap[RC] > heap[high]){
+        high = RC;
+    }
+
+    if(high != root){
+        swap(&heap[high], &heap[root]);
+        maxHeapify(heap, high);
+    }
+
+}
+
+int* heapifyArray(int *arr){
+
+    int i;
+    int *heap = malloc(sizeof(int) * (MAX+1));
+    
+    if(heap != NULL){
+        heap[0] = 0;
+    }
+
+    for(i = 0; i < MAX; i++){
+        heap[0]++;
+        heap[heap[0]] = arr[i];
+    }
+
+    for(i = heap[0]/2; i >= 1; i--){
+        maxHeapify(heap, i);
+    }
+
+    return heap;
 }
 
 void tournamentSort(int *arr){
