@@ -4,6 +4,8 @@
 #define MAX 10
 #define INF 9999
 
+int ITERATIONS = 0;
+
 // 1) Selection Sort
 void selectionSort(int *arr);
 // 2) Bubble Sort
@@ -48,15 +50,24 @@ void combSort(int *arr){
 
     int i, gap, swapped = 1;
 
-    gap /= 1.3;
+    gap = MAX/1.3;
 
+    while(gap >= 1 || swapped){
 
-    for(gap != 1 || swapped){
+        int pairs = MAX - gap;
+        swapped = 0;
 
-        
+        for(i = 0; i < pairs; i++){
+            if(arr[i] > arr[i+gap]){
+                swap(&arr[i], &arr[i+gap]);
+                swapped = 1;
+            }
+        }
+        ITERATIONS++;
+        gap /= 1.3;
 
     }
-
+    printf("iterations: %d\n", ITERATIONS);
 }
 
 void shellSort(int *arr){
