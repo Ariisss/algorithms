@@ -36,8 +36,8 @@ int main()
     // bubbleSort(arr);
     // insertionSort(arr);
     // shellSort(arr);
-    combSort(arr);
-    // tournamentSort(arr);
+    // combSort(arr);
+    tournamentSort(arr);
 
     // int *heap = heapifyArray(arr);
     // heapSort(heap);
@@ -46,52 +46,95 @@ int main()
     printArray(arr, MAX);
 }
 
-void combSort(int *arr){
+void tournamentSort(int *arr){
+
+    int heapSize = MAX * 2 - 1;
+    int *heap = (int*)malloc(sizeof(int) * heapSize);
+
+    int i, arrSize = MAX-1;
+
+    for(i = heapSize - 1; i >= 0; i--){
+        heap[i] = arrSize >= 0 ? arr[arrSize--] : INF;
+    }
+
+    int startNdx = heapSize - 1;
+
+    for(i = 0; i < MAX; i++){
+
+        for(int j = (startNdx-1) / 2; j >= 0; ){
+            
+            int RC = j * 2 + 1;
+            int LC = RC + 1;
+
+            int left = LC < (heapSize/2) ? heap[LC] : LC;
+            int right = RC < (heapSize/2) ? heap[RC] : RC;
+
+            heap[j] = heap[left] < heap[right] ? left : right;
+
+            j = (i > 0 && j != 0) ? (j-1) / 2 : j - 1;
+
+        } 
+
+        startNdx = heap[0];
+        arr[i] = heap[startNdx];
+        heap[startNdx] = INF;
+
+    }
+
+}
+
+void combSort(int *arr)
+{
 
     int i, gap, swapped = 1;
 
-    gap = MAX/1.3;
+    gap = MAX / 1.3;
 
-    while(gap >= 1 || swapped){
+    while (gap >= 1 || swapped)
+    {
 
         int pairs = MAX - gap;
         swapped = 0;
 
-        for(i = 0; i < pairs; i++){
-            if(arr[i] > arr[i+gap]){
-                swap(&arr[i], &arr[i+gap]);
+        for (i = 0; i < pairs; i++)
+        {
+            if (arr[i] > arr[i + gap])
+            {
+                swap(&arr[i], &arr[i + gap]);
                 swapped = 1;
             }
         }
         ITERATIONS++;
         gap /= 1.3;
-
     }
     printf("iterations: %d\n", ITERATIONS);
 }
 
-void shellSort(int *arr){
+void shellSort(int *arr)
+{
 
     int i, j, gap, key;
 
-    gap = MAX/2;
+    gap = MAX / 2;
     int swapped = 1;
 
-    while(gap != 1 || swapped){
+    while (gap != 1 || swapped)
+    {
 
         swapped = 0;
 
-        for(i = gap; i < MAX; i++){
+        for (i = gap; i < MAX; i++)
+        {
             key = arr[i];
-            for(j = i; j >= gap && arr[j-gap] > key; j -= gap){
-                arr[j] = arr[j-gap];
+            for (j = i; j >= gap && arr[j - gap] > key; j -= gap)
+            {
+                arr[j] = arr[j - gap];
                 swapped = 1;
             }
             arr[j] = key;
         }
 
         gap /= 2;
-
     }
 }
 
