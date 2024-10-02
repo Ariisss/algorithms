@@ -4,6 +4,8 @@
 #define MAX 10
 #define INF 9999
 
+typedef enum {TRUE, FALSE} Boolean;
+
 int ITERATIONS = 0;
 
 // 1) Selection Sort
@@ -16,6 +18,7 @@ void insertionSort(int *arr);
 void heapSort(int *heap);
 int *heapifyArray(int *arr);
 void maxHeapify(int *heap, int root);
+Boolean isMaxHeap(int *heap);
 // 5) Shell Sort
 void shellSort(int *arr);
 // 6) Comb Sort
@@ -40,10 +43,32 @@ int main()
     // tournamentSort(arr);
 
     int *heap = heapifyArray(arr);
-    heapSort(heap);
+    // int heap[] = {10, 27, 14, 89, 3, 56, 42, 18, 75, 9, 33};
+    // heapSort(heap);
 
     printArray(heap, heap[0] + 1);
     // printArray(arr, MAX);
+    printf("%d", isMaxHeap(heap));
+}
+
+Boolean isMaxHeap(int *heap){
+
+    Boolean retVal = TRUE;
+    int i;
+
+    for(i = 1; i <= heap[0]/2; i++){
+        int LC = i * 2;
+        int RC = i * 2 + 1;
+
+        if(LC < heap[0] && heap[LC] > heap[i]){
+            retVal = FALSE;
+        }
+
+        if(RC < heap[0] && heap[RC] > heap[i]){
+            retVal = FALSE;
+        }
+    }
+    return retVal;
 }
 
 void heapSort(int *heap){
@@ -92,10 +117,12 @@ int* heapifyArray(int *arr){
         heap[0]++;
         heap[heap[0]] = arr[i];
     }
+    printArray(heap, heap[0]+1);
 
     for(i = heap[0]/2; i >= 1; i--){
         maxHeapify(heap, i);
     }
+
 
     return heap;
 }
