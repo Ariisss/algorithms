@@ -29,7 +29,7 @@ void radixSort(int *arr){
     }
 
     int digits = 1;
-    while(max > 10){
+    while(max >= 10){
         max /= 10;
         digits++;
     }
