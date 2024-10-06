@@ -55,7 +55,7 @@ int main(){
     list.arr = malloc(sizeof(int) * MAX);
     list.count = 0;
 
-    if(list.arr != NULL){
+    if(list.arr != NULL){ 
         int i;
         for(i = 0; i < MAX; i++){
             list.arr[i] = values[i];
@@ -65,7 +65,8 @@ int main(){
 
     // gnomeSort(list);
     // int *output = countSort(list);
-    radixSort(&list);
+    // radixSort(&list);
+    lomutoQuicksort(list, 0, list.count-1);
 
     // printArray(output, MAX);
     printArray(list.arr, list.count);
@@ -234,10 +235,34 @@ int *countSort(ARRAY list){
 // 5) Recursively apply quick sort to the subarrays before and after the pivot.
 void lomutoQuicksort(ARRAY list, int low, int high){
 
+    if(low < high){
+
+        int pi = lomutoPartition(list, low, high);
+        lomutoQuicksort(list, low, pi-1);
+        lomutoQuicksort(list, pi + 1, high);
+
+    }
+
 }
 
 int lomutoPartition(ARRAY list, int low, int high){
 
+    int i, j, pivot = list.arr[high];
+
+    for(i = low, j = low; i < high; i++){
+        if(list.arr[i] <= pivot){
+            int temp = list.arr[i];
+            list.arr[i] = list.arr[j];
+            list.arr[j] = temp;
+            j++;
+        }
+    }
+
+    int temp = list.arr[j];
+    list.arr[j] = list.arr[high];
+    list.arr[high] = temp;
+
+    return j;
 }
 
 // Quicksort (Hoare)
@@ -248,6 +273,8 @@ int lomutoPartition(ARRAY list, int low, int high){
 // 5) If the left pointer is less than the right pointer, swap the elements and repeat steps 3-5.
 // 6) Once pointers cross, recursively apply quick sort to the subarrays before and after the partition index.
 void hoareQuicksort(ARRAY *list, int low, int high){
+
+
 
 }
 
