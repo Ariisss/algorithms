@@ -9,7 +9,7 @@ typedef struct node
 
 typedef struct
 {
-    int *elems;
+    int *arr;
     int count;
 } ARRAY;
 
@@ -42,13 +42,15 @@ void swap(int *a, int *b);
 
 int main(){
 
+    
+
 }
 
 // Gnome Sort process
 // 1) loop while i is less than size-1 (to avoid accessing out of bounds like when i = size - 1 and when we access i + 1 it will be out of bounds)
 // 2) if the current index's value and the next to it is unsorted, we swap then move backwards (we only move backwards when i > 0)
 // 3) if sorted, move forward
-void gnomeSort(int *arr, int size){
+void gnomeSort(ARRAY list, int size){
 
 }
 
@@ -56,7 +58,7 @@ void gnomeSort(int *arr, int size){
 // 1) Find largest element in the array
 // 2) Get the number of digits we have to iterate over by using the largest element
 // 2) Iterate through each digit and sort them according to their digit for each iteration (use any stable sort)
-void radixSort(int *arr){
+void radixSort(ARRAY list){
 
 }
 
@@ -66,7 +68,7 @@ void radixSort(int *arr){
 // 3) compute for bucket_index = (elem-min)/range
 // 4) place each element in the bucket with bucket_index as index (insert first or insert sorted)
 // 5) take each element starting from bucket index 0 and overwrite original array (delete first)
-void bucketSort(int *arr){
+void bucketSort(ARRAY list){
 
 }
 
@@ -84,8 +86,13 @@ void displayBuckets(LIST bucket[]){
 // 3) divide/make 2 sub arrays, left size is leftNdx to middle, right size is middle + 1 to rightNdx
 // 4) repeat 1 until each sub array only has 1 element
 // 5) merge the sub arrays
-void mergeSort(int *arr, int leftNdx, int rightNdx);
-void merge(int *arr, int leftNdx, int middleNdx, int rightNdx);
+void mergeSort(int *arr, int leftNdx, int rightNdx){
+
+}
+
+void merge(int *arr, int leftNdx, int middleNdx, int rightNdx){
+
+}
 
 // Counting Sort process
 // 1) Determine the range of input data by finding the maximum value.
@@ -94,7 +101,7 @@ void merge(int *arr, int leftNdx, int middleNdx, int rightNdx);
 // 4) Modify the count array by adding the previous counts to accumulate positions.
 // 5) Initialize an output array of the same size as the input array.
 // 6) Traverse the input array in reverse, placing each element into its correct position in the output array based on the count array.
-int *countSort(ARRAY *arr){
+int *countSort(ARRAY list){
 
 }
 
@@ -104,11 +111,11 @@ int *countSort(ARRAY *arr){
 // 3) Traverse the array, and for each element, if it is less than or equal to the pivot, swap it with the element at the smaller element pointer and increment the pointer.
 // 4) After traversal, swap the pivot with the element at the smaller element pointer.
 // 5) Recursively apply quick sort to the subarrays before and after the pivot.
-void lomutoQuicksort(ARRAY *arr, int low, int high){
+void lomutoQuicksort(ARRAY arr, int low, int high){
 
 }
 
-int lomutoPartition(ARRAY *arr, int low, int high){
+int lomutoPartition(ARRAY arr, int low, int high){
 
 }
 
@@ -140,6 +147,6 @@ int* strandSort(ARRAY *arr){
 }
 
 void mergeStrandOutput(int *output, int *outputSize, int *strand, int strandSize){
-    
+
 }
 
