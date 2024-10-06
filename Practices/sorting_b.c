@@ -23,6 +23,7 @@ typedef struct
 void gnomeSort(ARRAY list);
 // Radix Sort
 void radixSort(ARRAY list);
+void radixCountingSort(ARRAY list, int digitPlace);
 // Bucket Sort
 void bucketSort(ARRAY list);
 int getBucketIndex(int val, int min, float range);
@@ -62,10 +63,11 @@ int main(){
         }
     }
 
-    gnomeSort(list);
+    // gnomeSort(list);
+    int *output = countSort(list);
 
-
-    printArray(list.arr, MAX);
+    printArray(output, MAX);
+    // printArray(list.arr, MAX);
 }
 
 // Gnome Sort process
@@ -92,8 +94,15 @@ void gnomeSort(ARRAY list){
 // Radix Sort process
 // 1) Find largest element in the array
 // 2) Get the number of digits we have to iterate over by using the largest element
-// 2) Iterate through each digit and sort them according to their digit for each iteration (use any stable sort)
+// 2) Iterate through each digit and sort them according to their digit for each iteration (use any stable sort), for this time, i will be using counting sort.
 void radixSort(ARRAY list){
+
+    // int i, max = list.arr[0];
+    // for(i = 1; i < MAX; i++){
+    //     if(list.arr[i] > max){
+    //         max = list.arr[i];
+    //     }
+    // }
 
 }
 
@@ -104,6 +113,8 @@ void radixSort(ARRAY list){
 // 4) place each element in the bucket with bucket_index as index (insert first or insert sorted)
 // 5) take each element starting from bucket index 0 and overwrite original array (delete first)
 void bucketSort(ARRAY list){
+
+
 
 }
 
@@ -130,7 +141,7 @@ void merge(ARRAY list, int leftNdx, int middleNdx, int rightNdx){
 }
 
 // Counting Sort process
-// 1) Determine the range of input data by finding the maximum value.
+// 1) Determine the range of input data by finding the maximum value and minimum value (max - min + 1).
 // 2) Initialize a count array with size equal to the range, filled with zeros.
 // 3) Traverse the input array and increment the corresponding index in the count array for each element.
 // 4) Modify the count array by adding the previous counts to accumulate positions.
@@ -138,6 +149,36 @@ void merge(ARRAY list, int leftNdx, int middleNdx, int rightNdx){
 // 6) Traverse the input array in reverse, placing each element into its correct position in the output array based on the count array.
 int *countSort(ARRAY list){
 
+    int i, max = list.arr[0], min = list.arr[0];
+    int *output = malloc(sizeof(int) * list.count);
+
+    for(i = 1; i < MAX; i++){
+        if(max < list.arr[i]){
+            max = list.arr[i];
+        }
+        if(min > list.arr[i]){
+            min = list.arr[i];
+        }
+    }
+
+    int range = max - min + 1;
+    int *countArray = calloc(range, sizeof(int));
+
+    for(i = 0; i < MAX; i++){
+        countArray[list.arr[i] - min]++;
+    }
+
+
+    for(i = 1; i < range; i++){
+        countArray[i] += countArray[i-1];
+    }
+
+    for(i = list.count-1; i >= 0; i--){
+        output[--countArray[list.arr[i] - min]] = list.arr[i];
+    }
+
+    // printArray(output, list.count);
+    return output;
 }
 
 // Quicksort (Lomuto)
