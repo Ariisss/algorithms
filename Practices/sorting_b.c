@@ -14,26 +14,26 @@ typedef struct
 } ARRAY;
 
 // Gnome Sort
-void gnomeSort(int *arr, int size);
+void gnomeSort(ARRAY list);
 // Radix Sort
-void radixSort(int *arr);
+void radixSort(ARRAY list);
 // Bucket Sort
-void bucketSort(int *arr);
+void bucketSort(ARRAY list);
 int getBucketIndex(int val, int min, float range);
 void displayBuckets(LIST bucket[]);
 // Merge Sort
-void mergeSort(int *arr, int leftNdx, int rightNdx);
-void merge(int *arr, int leftNdx, int middleNdx, int rightNdx);
+void mergeSort(ARRAY list, int leftNdx, int rightNdx);
+void merge(ARRAY list, int leftNdx, int middleNdx, int rightNdx);
 // Counting Sort
-int *countSort(ARRAY *arr);
+int *countSort(ARRAY list);
 // Quicksort (Lomuto)
-void lomutoQuicksort(ARRAY *arr, int low, int high);
-int lomutoPartition(ARRAY *arr, int low, int high);
+void lomutoQuicksort(ARRAY list, int low, int high);
+int lomutoPartition(ARRAY list, int low, int high);
 // Quicksort (Hoare)
-void hoareQuicksort(ARRAY *arr, int low, int high);
-int hoarePartition(ARRAY *arr, int low, int high);
+void hoareQuicksort(ARRAY *list, int low, int high);
+int hoarePartition(ARRAY *list, int low, int high);
 // Strand Sort
-int* strandSort(ARRAY *arr);
+int* strandSort(ARRAY *list);
 void mergeStrandOutput(int *output, int *outputSize, int *strand, int strandSize);
 
 // helper functions
@@ -50,7 +50,7 @@ int main(){
 // 1) loop while i is less than size-1 (to avoid accessing out of bounds like when i = size - 1 and when we access i + 1 it will be out of bounds)
 // 2) if the current index's value and the next to it is unsorted, we swap then move backwards (we only move backwards when i > 0)
 // 3) if sorted, move forward
-void gnomeSort(ARRAY list, int size){
+void gnomeSort(ARRAY list){
 
 }
 
@@ -86,11 +86,11 @@ void displayBuckets(LIST bucket[]){
 // 3) divide/make 2 sub arrays, left size is leftNdx to middle, right size is middle + 1 to rightNdx
 // 4) repeat 1 until each sub array only has 1 element
 // 5) merge the sub arrays
-void mergeSort(int *arr, int leftNdx, int rightNdx){
+void mergeSort(ARRAY list, int leftNdx, int rightNdx){
 
 }
 
-void merge(int *arr, int leftNdx, int middleNdx, int rightNdx){
+void merge(ARRAY list, int leftNdx, int middleNdx, int rightNdx){
 
 }
 
@@ -111,11 +111,11 @@ int *countSort(ARRAY list){
 // 3) Traverse the array, and for each element, if it is less than or equal to the pivot, swap it with the element at the smaller element pointer and increment the pointer.
 // 4) After traversal, swap the pivot with the element at the smaller element pointer.
 // 5) Recursively apply quick sort to the subarrays before and after the pivot.
-void lomutoQuicksort(ARRAY arr, int low, int high){
+void lomutoQuicksort(ARRAY list, int low, int high){
 
 }
 
-int lomutoPartition(ARRAY arr, int low, int high){
+int lomutoPartition(ARRAY list, int low, int high){
 
 }
 
@@ -126,11 +126,11 @@ int lomutoPartition(ARRAY arr, int low, int high){
 // 4) Move the right pointer backward until an element less than or equal to the pivot is found.
 // 5) If the left pointer is less than the right pointer, swap the elements and repeat steps 3-5.
 // 6) Once pointers cross, recursively apply quick sort to the subarrays before and after the partition index.
-void hoareQuicksort(ARRAY *arr, int low, int high){
+void hoareQuicksort(ARRAY *list, int low, int high){
 
 }
 
-int hoarePartition(ARRAY *arr, int low, int high){
+int hoarePartition(ARRAY *list, int low, int high){
 
 }
 
@@ -142,7 +142,7 @@ int hoarePartition(ARRAY *arr, int low, int high){
 //    c) Remove the appended elements from the input list.
 //    d) Merge the sublist into the sorted list in the correct order.
 // 3) Repeat until the input list is empty.
-int* strandSort(ARRAY *arr){
+int* strandSort(ARRAY *list){
 
 }
 
