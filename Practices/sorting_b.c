@@ -1,5 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define MAX 10
+
+int ITERATIONS = 0;
+int SWAPS = 0;
+int RECURSIONS = 0;
+int SHIFTS = 0;
 
 typedef struct node
 {
@@ -42,8 +48,24 @@ void swap(int *a, int *b);
 
 int main(){
 
-    
+    int values[] = {7, 123, 45, 9, 56, 210, 34, 3, 3, 150};
 
+    ARRAY list;
+    list.arr = malloc(sizeof(int) * MAX);
+    list.count = 0;
+
+    if(list.arr != NULL){
+        int i;
+        for(i = 0; i < MAX; i++){
+            list.arr[i] = values[i];
+            list.count++;
+        }
+    }
+
+    gnomeSort(list);
+
+
+    printArray(list.arr, MAX);
 }
 
 // Gnome Sort process
@@ -52,6 +74,19 @@ int main(){
 // 3) if sorted, move forward
 void gnomeSort(ARRAY list){
 
+    int i = 0;
+    while(i < list.count - 1){
+        if(list.arr[i] > list.arr[i+1]){
+            int temp = list.arr[i];
+            list.arr[i] = list.arr[i+1];
+            list.arr[i+1] = temp;
+            if(i > 0){
+                i--;
+            }
+        }else{
+            i++;
+        }
+    }
 }
 
 // Radix Sort process
@@ -150,3 +185,23 @@ void mergeStrandOutput(int *output, int *outputSize, int *strand, int strandSize
 
 }
 
+void printArray(int arr[], int N){
+
+    printf("# of Iterations: %d\n", ITERATIONS);
+    printf("# of Swaps: %d\n", SWAPS);
+    printf("# of Shifts: %d\n", SHIFTS);
+    printf("# of Recursions: %d\n", RECURSIONS);
+
+    for (int i = 0; i < N; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    printf("\n");
+}
+
+void swap(int *a, int *b){
+    int temp = *a;
+	*a = *b;
+	*b = temp;
+}
