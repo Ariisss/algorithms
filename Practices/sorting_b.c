@@ -66,7 +66,8 @@ int main(){
     // gnomeSort(list);
     // int *output = countSort(list);
     // radixSort(&list);
-    lomutoQuicksort(list, 0, list.count-1);
+    // lomutoQuicksort(list, 0, list.count-1);
+    hoareQuicksort(&list, 0, list.count-1);
 
     // printArray(output, MAX);
     printArray(list.arr, list.count);
@@ -274,12 +275,37 @@ int lomutoPartition(ARRAY list, int low, int high){
 // 6) Once pointers cross, recursively apply quick sort to the subarrays before and after the partition index.
 void hoareQuicksort(ARRAY *list, int low, int high){
 
+    if(low < high){
 
+        int pivot = hoarePartition(list, low, high);
+        hoareQuicksort(list, low, pivot-1);
+        hoareQuicksort(list, pivot+1, high);
+
+    }
 
 }
 
 int hoarePartition(ARRAY *list, int low, int high){
 
+    int i = low+1, j = high, pivot = list->arr[low];
+
+    while(i < j){
+
+        for( ; i < j && list->arr[i] <= pivot; i++){}
+        for( ; j >= i && list->arr[j] > pivot; j--){}
+
+        if(i < j){
+            int temp = list->arr[i];
+            list->arr[i] = list->arr[j];
+            list->arr[j] = temp;
+        }
+    }
+
+    int temp = list->arr[j];
+    list->arr[j] = list->arr[low];
+    list->arr[low] = temp;
+
+    return j;
 }
 
 // Strand Sort
