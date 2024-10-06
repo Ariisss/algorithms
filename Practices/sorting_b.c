@@ -22,8 +22,8 @@ typedef struct
 // Gnome Sort
 void gnomeSort(ARRAY list);
 // Radix Sort
-void radixSort(ARRAY list);
-void radixCountingSort(ARRAY list, int digitPlace);
+void radixSort(ARRAY *list);
+int* radixCountingSort(ARRAY list, int digitPlace);
 // Bucket Sort
 void bucketSort(ARRAY list);
 int getBucketIndex(int val, int min, float range);
@@ -64,10 +64,11 @@ int main(){
     }
 
     // gnomeSort(list);
-    int *output = countSort(list);
+    // int *output = countSort(list);
+    radixSort(&list);
 
-    printArray(output, MAX);
-    // printArray(list.arr, MAX);
+    // printArray(output, MAX);
+    printArray(list.arr, list.count);
 }
 
 // Gnome Sort process
@@ -95,15 +96,51 @@ void gnomeSort(ARRAY list){
 // 1) Find largest element in the array
 // 2) Get the number of digits we have to iterate over by using the largest element
 // 2) Iterate through each digit and sort them according to their digit for each iteration (use any stable sort), for this time, i will be using counting sort.
-void radixSort(ARRAY list){
+void radixSort(ARRAY *list){
 
-    // int i, max = list.arr[0];
-    // for(i = 1; i < MAX; i++){
-    //     if(list.arr[i] > max){
-    //         max = list.arr[i];
-    //     }
-    // }
+    // finding max element
+    int i, max = list->arr[0];
+    for(i = 1; i < MAX; i++){
+        if(list->arr[i] > max){
+            max = list->arr[i];
+        }
+    }
 
+    // sort for each digit
+    int place;
+    for(place = 1; max/place > 0; place *= 10){
+        // we point list->arr to the array returned by radixCountingSort
+        list->arr = radixCountingSort(*list, place);
+    }
+
+}
+
+int* radixCountingSort(ARRAY list, int digitPlace){
+
+    // count array is size 10 (depends on the base) only, since we are only dealing with digits
+    int *countArray = calloc(10, sizeof(int));
+
+    // output array to return
+    int *output = malloc(sizeof(int) * list.count);
+    int i;
+
+    // increase count for each element's digit depending on digitPlace
+    for(i = 0; i < list.count; i++){
+        int ndx = (list.arr[i]/digitPlace) % 10;
+        countArray[ndx]++;
+    }
+
+    // prefix sum
+    for(i = 1; i < MAX; i++){
+        countArray[i] += countArray[i-1]; 
+    }
+
+    // move original element to output array starting from the last element to its corresponding place in the output array
+    for(i = list.count-1; i >= 0; i--){
+        output[--countArray[(list.arr[i]/digitPlace) % 10]] = list.arr[i];
+    }
+
+    return output;
 }
 
 // Bucket Sort process
@@ -149,9 +186,13 @@ void merge(ARRAY list, int leftNdx, int middleNdx, int rightNdx){
 // 6) Traverse the input array in reverse, placing each element into its correct position in the output array based on the count array.
 int *countSort(ARRAY list){
 
+    // initialized max and min for the range
     int i, max = list.arr[0], min = list.arr[0];
+
+    // initialized output array to return
     int *output = malloc(sizeof(int) * list.count);
 
+    // looking for max and min digit
     for(i = 1; i < MAX; i++){
         if(max < list.arr[i]){
             max = list.arr[i];
@@ -161,23 +202,27 @@ int *countSort(ARRAY list){
         }
     }
 
+    // getting the range
     int range = max - min + 1;
+
+    // initialized count array
     int *countArray = calloc(range, sizeof(int));
 
+    // adding element count/frequency
     for(i = 0; i < MAX; i++){
         countArray[list.arr[i] - min]++;
     }
 
-
+    // prefix sum array
     for(i = 1; i < range; i++){
         countArray[i] += countArray[i-1];
     }
 
+    // filling output array with original array's elements to its proper index
     for(i = list.count-1; i >= 0; i--){
         output[--countArray[list.arr[i] - min]] = list.arr[i];
     }
 
-    // printArray(output, list.count);
     return output;
 }
 
