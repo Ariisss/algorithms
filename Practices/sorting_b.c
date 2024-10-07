@@ -67,10 +67,11 @@ int main(){
     // int *output = countSort(list);
     // radixSort(&list);
     // lomutoQuicksort(list, 0, list.count-1);
-    hoareQuicksort(&list, 0, list.count-1);
+    // hoareQuicksort(&list, 0, list.count-1);
+    int *output = strandSort(&list);
 
     // printArray(output, MAX);
-    printArray(list.arr, list.count);
+    printArray(output, MAX);
 }
 
 // Gnome Sort process
@@ -319,14 +320,62 @@ int hoarePartition(ARRAY *list, int low, int high){
 // 3) Repeat until the input list is empty.
 int* strandSort(ARRAY *list){
 
+    int *output = malloc(sizeof(int) * MAX);
+    int *sublist = malloc(sizeof(int) * MAX);
+    int outputSize = 0;
+    int sublistSize = 0;
+    int i = 0, j = 0;
 
+    while(list->count > 0){
 
+        sublistSize = 0, i = 0, j = 0;
+        sublist[sublistSize++] = list->arr[i++];
+
+        while(i < list->count){
+            if(list->arr[i] >= sublist[sublistSize-1]){
+                sublist[sublistSize++] = list->arr[i++];
+            }else{
+                list->arr[j++] = list->arr[i++];
+            }
+        }
+
+        list->count = j;
+
+        mergeStrandOutput(output, &outputSize, sublist, sublistSize);
+
+    }
+    
+    return output;
 }
 
-void mergeStrandOutput(int *output, int *outputSize, int *strand, int strandSize){
+void mergeStrandOutput(int *output, int *outputSize, int *sublist, int sublistSize){
 
+    int i = 0, j = 0, k = 0;
+    int *temp = malloc(sizeof(int) * (*outputSize + sublistSize));
 
+    while(i < *outputSize && j < sublistSize){
+        if(output[i] <= sublist[j]){
+            temp[k++] = output[i++];
+        }else{
+            temp[k++] = sublist[j++];
+        }
+    }
 
+    while(j < sublistSize){
+        temp[k++] = sublist[j++];
+    }
+
+    while(i < *outputSize){
+        temp[k++] = output[i++];
+    }
+
+    *outputSize = k;
+
+    for(i = 0; i < *outputSize; i++){
+        output[i] = temp[i];
+    }
+
+    free(temp);
 }
 
 void printArray(int arr[], int N){
