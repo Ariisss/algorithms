@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define MAX 10
 
 int ITERATIONS = 0;
@@ -68,10 +69,11 @@ int main(){
     // radixSort(&list);
     // lomutoQuicksort(list, 0, list.count-1);
     // hoareQuicksort(&list, 0, list.count-1);
-    int *output = strandSort(&list);
+    // int *output = strandSort(&list);
+    bucketSort(list);
 
     // printArray(output, MAX);
-    printArray(output, MAX);
+    printArray(list.arr, MAX);
 }
 
 // Gnome Sort process
@@ -154,16 +156,65 @@ int* radixCountingSort(ARRAY list, int digitPlace){
 // 5) take each element starting from bucket index 0 and overwrite original array (delete first)
 void bucketSort(ARRAY list){
 
+    LIST bucket[MAX] = {NULL};
 
+    int i, max = list.arr[0], min = list.arr[0];
 
+    for(i = 1; i < MAX; i++){
+        if(max < list.arr[i]) max = list.arr[i];
+        if(min > list.arr[i]) min = list.arr[i];
+    }
+
+    int range = ceil((float)(max-min)/MAX);
+    // int range = (max-min)/MAX;
+
+    for(i = 0; i < MAX; i++){
+        int bucketIndex = getBucketIndex(list.arr[i], min, range);
+        LIST *ptr = &bucket[bucketIndex];
+
+        for( ; *ptr != NULL && list.arr[i] > (*ptr)->val; ptr = &(*ptr)->next){}
+
+        LIST temp = malloc(sizeof(struct node));
+        if(temp != NULL){
+            temp->val = list.arr[i];
+            temp->next = *ptr;
+            *ptr = temp;
+        }
+        
+
+    }
+
+    for(i = 0; i < MAX;){
+       
+        int j;
+        for(j = 0; j < MAX; j++){
+            LIST *ptr = &bucket[j];
+            for( ; (*ptr) != NULL; ptr = &(*ptr)->next){
+                list.arr[i++] = (*ptr)->val;
+            }
+        }
+
+    }
+    
+    displayBuckets(bucket);
 }
 
 int getBucketIndex(int val, int min, float range){
-
+    return (val-min)/range;
 }
 
 void displayBuckets(LIST bucket[]){
 
+    for(int i = 0; i < MAX; i++){
+        LIST *ptr = &bucket[i];
+        printf("Bucket %d: ", i);
+        while(*ptr != NULL){
+            printf("%d ", (*ptr)->val);
+            *ptr = (*ptr)->next;
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
 
 // Merge Sort process
@@ -344,7 +395,7 @@ int* strandSort(ARRAY *list){
         mergeStrandOutput(output, &outputSize, sublist, sublistSize);
 
     }
-    
+
     return output;
 }
 
