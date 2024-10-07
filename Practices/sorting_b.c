@@ -12,7 +12,7 @@ typedef struct node
     struct node *next;
     int val;
 } *LIST;
-
+ 
 typedef struct
 {
     int *arr;
@@ -280,24 +280,25 @@ void hoareQuicksort(ARRAY *list, int low, int high){
         int pivot = hoarePartition(list, low, high);
         hoareQuicksort(list, low, pivot-1);
         hoareQuicksort(list, pivot+1, high);
-
+        RECURSIONS++;
     }
 
 }
 
 int hoarePartition(ARRAY *list, int low, int high){
 
-    int i = low+1, j = high, pivot = list->arr[low];
+    int i = low, j = high, pivot = list->arr[low];
 
     while(i < j){
 
-        for( ; i < j && list->arr[i] <= pivot; i++){}
-        for( ; j >= i && list->arr[j] > pivot; j--){}
+        for( ; i < j && list->arr[i] <= pivot; i++){ITERATIONS++;}
+        for( ; j >= i && list->arr[j] > pivot; j--){ITERATIONS++;}
 
         if(i < j){
             int temp = list->arr[i];
             list->arr[i] = list->arr[j];
             list->arr[j] = temp;
+            SWAPS++;
         }
     }
 
@@ -318,9 +319,13 @@ int hoarePartition(ARRAY *list, int low, int high){
 // 3) Repeat until the input list is empty.
 int* strandSort(ARRAY *list){
 
+
+
 }
 
 void mergeStrandOutput(int *output, int *outputSize, int *strand, int strandSize){
+
+
 
 }
 
