@@ -171,17 +171,18 @@ void bucketSort(ARRAY list){
     for(i = 0; i < MAX; i++){
         int bucketIndex = getBucketIndex(list.arr[i], min, range);
         LIST *ptr = &bucket[bucketIndex];
+        LIST temp;
 
         for( ; *ptr != NULL && list.arr[i] > (*ptr)->val; ptr = &(*ptr)->next){}
 
-        LIST temp = malloc(sizeof(struct node));
+        temp = malloc(sizeof(struct node));
         if(temp != NULL){
             temp->val = list.arr[i];
             temp->next = *ptr;
             *ptr = temp;
+            // free(temp);
         }
         
-
     }
 
     for(i = 0; i < MAX;){
@@ -189,13 +190,15 @@ void bucketSort(ARRAY list){
         int j;
         for(j = 0; j < MAX; j++){
             LIST *ptr = &bucket[j];
-            for( ; (*ptr) != NULL; ptr = &(*ptr)->next){
+            for( ; (*ptr) != NULL; ){
                 list.arr[i++] = (*ptr)->val;
+                LIST temp = *ptr;
+                *ptr = temp->next;
+                free(temp);
             }
         }
 
     }
-    
     displayBuckets(bucket);
 }
 
@@ -224,6 +227,8 @@ void displayBuckets(LIST bucket[]){
 // 4) repeat 1 until each sub array only has 1 element
 // 5) merge the sub arrays
 void mergeSort(ARRAY list, int leftNdx, int rightNdx){
+
+
 
 }
 
