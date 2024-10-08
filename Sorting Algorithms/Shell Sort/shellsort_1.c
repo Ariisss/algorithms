@@ -1,4 +1,5 @@
 #include <stdio.h>
+int ITERATIONS = 0;
 
 void printArray(int arr[], int N);
 void swap(int *a, int *b);
@@ -37,6 +38,8 @@ void shellSort(int *arr, int size){
             arr[j] = key;
         }
 
+        ITERATIONS++;
+
     }
 
 }
@@ -49,6 +52,7 @@ void swap(int *a, int *b){
 
 void printArray(int arr[], int N)
 {
+    printf("Iterations: %d\n", ITERATIONS);
     for (int i = 0; i < N; i++){
         printf("%d ", arr[i]);
     }
