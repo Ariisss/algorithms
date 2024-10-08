@@ -28,13 +28,15 @@ void radixSort(int *arr){
         }
     }
 
+
+    // getting digits
     int digits = 1;
     while(max >= 10){
         max /= 10;
         digits++;
     }
 
-
+    // we sort them by each digit
     int ctr = 1;
     while(ctr <= digits){
 
