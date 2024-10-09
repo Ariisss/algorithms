@@ -171,7 +171,7 @@ void bucketSort(ARRAY list){
     for(i = 0; i < MAX; i++){
         int bucketIndex = getBucketIndex(list.arr[i], min, range);
         LIST *ptr = &bucket[bucketIndex];
-        LIST temp;
+        LIST temp; 
 
         for( ; *ptr != NULL && list.arr[i] > (*ptr)->val; ptr = &(*ptr)->next){}
 
